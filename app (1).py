@@ -5,8 +5,7 @@ import google.generativeai as genai
 
 
 # Configure Gemini API
-genai.configure(api_key="AQ.Ab8RN6JH57TtQOLer2z3fPSDa9Q_hPpF09RvdUa5ZOKpeojP4g")
-
+genai.configure(api_key=st.secrets["AQ.Ab8RN6JH57TtQOLer2z3fPSDa9Q_hPpF09RvdUa5ZOKpeojP4g"])
 
 model = genai.GenerativeModel("gemini-flash-latest")
 
