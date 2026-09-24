@@ -1,4 +1,3 @@
-```python
 import streamlit as st
 from google import genai
 
@@ -99,4 +98,3 @@ if st.button("Generate"):
             )
 
             st.caption(f"Error: {e}")
-```
