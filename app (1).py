@@ -5,7 +5,8 @@ import google.generativeai as genai
 
 
 # Configure Gemini API
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+genai.configure(api_key="AQ.Ab8RN6IYISG6OWKF9A7lHkzBVLPP2_sR27BEXf3sEUoEBycFWw")
+
 
 model = genai.GenerativeModel("gemini-flash-latest")
 
@@ -28,7 +29,6 @@ option = st.selectbox(
         "Ask Anything"
     ]
 )
-
 
 
 if st.button("Generate"):
