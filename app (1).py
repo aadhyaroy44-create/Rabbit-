@@ -1,18 +1,32 @@
-
-
+```python
 import streamlit as st
-import google.generativeai as genai
+from google import genai
 
 
-# Configure Gemini API
-genai.configure(api_key="AQ.Ab8RN6JJxLRDLvUQM5SI8WjMn0g5AK77m6j5UDz6XA0eIjnUZA")
+# --------------------------------------------------
+# PAGE CONFIGURATION
+# --------------------------------------------------
+
+st.set_page_config(
+    page_title="AI Learning Buddy Rabbit",
+    page_icon="🎓"
+)
 
 
-model = genai.GenerativeModel("gemini-flash-latest")
+# --------------------------------------------------
+# GEMINI CONFIGURATION
+# --------------------------------------------------
+
+client = genai.Client(
+    api_key=st.secrets["GEMINI_API_KEY"]
+)
+
+MODEL_NAME = "gemini-3.8-flash"
 
 
-st.set_page_config(page_title="AI Learning Buddy Rabbit", page_icon="🎓")
-
+# --------------------------------------------------
+# UI
+# --------------------------------------------------
 
 st.title("🎓 AI Learning Buddy Rabbit")
 
@@ -31,31 +45,58 @@ option = st.selectbox(
 )
 
 
+# --------------------------------------------------
+# GENERATE RESPONSE
+# --------------------------------------------------
+
 if st.button("Generate"):
 
+    if not topic.strip():
 
-    if topic == "":
         st.warning("Please enter a topic.")
+
     else:
 
-
         if option == "Explain Concept":
-            prompt = f"Explain {topic} in simple language for a beginner."
 
+            prompt = (
+                f"Explain {topic} in simple language "
+                "for a beginner."
+            )
 
         elif option == "Real-Life Example":
-            prompt = f"Give one simple real-life example of {topic}."
 
+            prompt = (
+                f"Give one simple real-life example "
+                f"of {topic}."
+            )
 
         elif option == "Generate Quiz":
-            prompt = f"Create 5 MCQs on {topic} with answers."
 
+            prompt = (
+                f"Create 5 MCQs on {topic} "
+                "with answers."
+            )
 
         else:
+
             prompt = topic
 
+        try:
 
-        response = model.generate_content(prompt)
+            response = client.models.generate_content(
+                model=MODEL_NAME,
+                contents=prompt
+            )
 
+            st.write(response.text)
 
-        st.write(response.text)
+        except Exception as e:
+
+            st.error(
+                "Unable to generate a response. "
+                "Please try again."
+            )
+
+            st.caption(f"Error: {e}")
+```
